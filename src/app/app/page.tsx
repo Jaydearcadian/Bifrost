@@ -40,6 +40,10 @@ export default function AppPage() {
   const [assetsLoaded, setAssetsLoaded] = useState(false);
   const [routers, setRouters] = useState<any[]>([]);
 
+  const [network, setNetwork] = useState<'mainnet' | 'testnet'>('mainnet');
+  const networkLabel = network === 'mainnet' ? 'Mainnet' : 'Testnet';
+  const faucetHref = 'https://faucet.ton.org/';
+
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
