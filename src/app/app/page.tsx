@@ -183,9 +183,26 @@ export default function AppPage() {
     <main className="space-y-6">
       <section className="space-y-2">
         <h1 className="text-xl font-semibold text-slate-100">Safe Swap</h1>
-        <p className="text-sm text-slate-400">
-          Real STON.fi REST integration + Bifrost policy/canary + wallet connect + proof lifecycle.
+        <p className="text-xs text-slate-400">
+          Network: <span className="text-bifrost-ice">{networkLabel}</span>
+          <button
+            type="button"
+            onClick={() => setNetwork((n) => (n === 'mainnet' ? 'testnet' : 'mainnet'))}
+            className="ml-3 rounded-lg border border-bifrost-border px-2 py-1 text-[11px] text-slate-200 hover:border-bifrost-ice"
+          >
+            Switch to {network === 'mainnet' ? 'Testnet' : 'Mainnet'}
+          </button>
         </p>
+        {network === 'testnet' && (
+          <a
+            href={faucetHref}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex rounded-lg border border-bifrost-ice px-3 py-1 text-[11px] text-bifrost-ice hover:bg-bifrost-ice/10"
+          >
+            Claim testnet TON
+          </a>
+        )}
         <TonConnectWallet />
       </section>
 
