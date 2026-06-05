@@ -48,7 +48,7 @@ export default function AppPage() {
         if (!cancelled) {
           const next: Record<string, string> = {};
           a.forEach((item) => {
-            if (item.contract_address) next[item.contract_address] = item.symbol;
+            if (item.contract_address) next[item.contract_address] = item.symbol ?? item.contract_address;
           });
           next[TON_ADDRESS] = 'TON';
           next[USDT_ADDRESS] = 'USD₮';
@@ -93,7 +93,7 @@ export default function AppPage() {
       const res = await simulateSwap({
         offer_address: inputAddress,
         ask_address: outputAddress,
-        offer_amount: amount,
+        offer_amount: Number(amount),
         slippage_tolerance: 50,
       });
 
