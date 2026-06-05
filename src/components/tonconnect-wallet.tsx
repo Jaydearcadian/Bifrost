@@ -40,8 +40,21 @@ function WalletInner() {
 }
 
 export default function TonConnectWallet() {
+  const [manifestUrl, setManifestUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const base = `${window.location.origin}/Bifrost`;
+      setManifestUrl(`${base}/tonconnect-manifest.json`);
+    } catch {
+      setManifestUrl('/tonconnect-manifest.json');
+    }
+  }, []);
+
+  if (!manifestUrl) return null;
+
   return (
-    <TonConnectUIProvider manifestUrl="/tonconnect-manifest.json">
+    <TonConnectUIProvider manifestUrl={manifestUrl}>
       <WalletInner />
     </TonConnectUIProvider>
   );
