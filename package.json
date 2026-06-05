@@ -1,0 +1,29 @@
+{
+  "name": "bifrost",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ton/crypto": "3.2.0",
+    "@ton/ton": "13.11.1",
+    "@tonconnect/sdk": "^3.4.1",
+    "@tonconnect/ui-react": "2.0.9",
+    "next": "14.2.18",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/react": "18.3.12",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.49",
+    "tailwindcss": "3.4.17",
+    "tsx": "^4.22.4",
+    "typescript": "5.6.3"
+  }
+}
