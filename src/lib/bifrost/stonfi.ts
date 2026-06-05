@@ -69,31 +69,29 @@ export function fromBaseUnits(raw: string | number | undefined): string {
   return signed ? `-${formatted}` : formatted;
 }
 
-export async function simulateSwap({
-  offer_address,
-  ask_address,
-  offer_amount,
-  slippage_tolerance = 50,
-}: {
-  offer_address: Address;
-  ask_address: Address;
-  offer_amount: number;
+export async function simulateSwap(params: {
+  offer_address: string;
+  ask_address: string;
+  offer_amount: string | number;
   slippage_tolerance?: number;
 }): Promise<SimulateResponse> {
-  const res = await fetch(`https://api.ston.fi/v1/swap/simulate`, {
+  const offerAmount = typeof params.offer_amount === 'number' ? String(params.offer_amount) : params.offer_amount;
+ const res = await fetch(`https://api.ston.fi/v1/swap/simulate`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
-      offer_address,
-      ask_address,
-      offer_amount: toBaseUnits(offer_amount, TON_DECIMALS),
-      slippage_tolerance,
+      offer_address: params.offer_address,
+      ask_address: params.ask_address,
+      offer_amount: toBaseUnits(Number(offerAmount), TON_DECIMALS),
+      slippage_tolerance: params.slippage_tolerance ?? 50,
     }),
     next: { revalidate: 0 },
   });
   if (!res.ok) {
-    const body = await res.text().catch(() => 'unknown');
-    throw new Error(`Simulation failed: ${res.status} ${body}`);
+    const text = await res.text().catch(() => 'unknown');
+    const trimmed = text.trim();
+    if (trimmed) throw new Error(`Simulation failed: ${res.status} ${trimmed}`);
+    throw new Error(`Simulation failed: ${res.status}`);
   }
   return (await res.json()) as SimulateResponse;
 }
