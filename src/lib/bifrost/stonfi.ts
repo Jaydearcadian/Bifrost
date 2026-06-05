@@ -57,6 +57,9 @@ export async function simulateSwap(params: {
     }),
     next: { revalidate: 0 },
   });
-  if (!res.ok) throw new Error('Simulation failed');
+  if (!res.ok) {
+    const body = await res.text().catch(() => 'unknown');
+    throw new Error(`Simulation failed: ${res.status} ${body}`);
+  }
   return (await res.json()) as StonfiSimulateResponse;
 }
