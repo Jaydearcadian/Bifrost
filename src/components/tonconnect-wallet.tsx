@@ -44,7 +44,7 @@ export default function TonConnectWallet() {
 
   useEffect(() => {
     try {
-      const base = `${window.location.origin}/Bifrost`;
+      const base = 'https://jaydearcadian.github.io/Bifrost';
       setManifestUrl(`${base}/tonconnect-manifest.json`);
     } catch {
       setManifestUrl('/tonconnect-manifest.json');
